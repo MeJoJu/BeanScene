@@ -20,6 +20,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 
 //Services configuration
 builder.Services.AddScoped<IAreasService, AreasService>();
+builder.Services.AddScoped<IFileService, FileService>();
+
 builder.Services.AddScoped<IUserService, UserService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();

@@ -1,4 +1,5 @@
 ﻿using BeanScene2.Models;
+using BeanScene2.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -9,11 +10,15 @@ namespace BeanScene2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IFileService iFService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IFileService iFService)
         {
             _logger = logger;
+            this.iFService = iFService;
         }
+
+
 
         public IActionResult Index()
         {
