@@ -57,6 +57,7 @@ namespace BeanScene2.Controllers
         }
 
         // GET: Areas/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
@@ -65,6 +66,7 @@ namespace BeanScene2.Controllers
         // POST: Areas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("AreaId,AreaName,Capacity")] Area area)
@@ -79,6 +81,7 @@ namespace BeanScene2.Controllers
         }
 
         // GET: Areas/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Area == null)
@@ -97,6 +100,7 @@ namespace BeanScene2.Controllers
         // POST: Areas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("AreaId,AreaName,Capacity")] Area area)
@@ -130,6 +134,7 @@ namespace BeanScene2.Controllers
         }
 
         // GET: Areas/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Area == null)
@@ -148,6 +153,7 @@ namespace BeanScene2.Controllers
         }
 
         // POST: Areas/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<BeanScene2.Models.Customer>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Customer Index";
 }
 
-<h1>Index</h1>
+<h1>Customer Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -43,9 +43,9 @@
                 @Html.DisplayFor(modelItem => item.Phone)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.CustomerId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CustomerId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CustomerId">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.CustomerId"><i class="bi bi-pencil-square"></i> Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CustomerId"><i class="bi bi-eye"></i> Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CustomerId"><i class="bi bi-trash3"></i> Delete</a>
             </td>
         </tr>
 }

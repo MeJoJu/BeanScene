@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using BeanScene2.Data;
 using BeanScene2.Data.Services;
 using Microsoft.AspNetCore.Identity;
+using BeanScene2.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,15 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<BeanScene2Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("BeanScene2Context") ?? throw new InvalidOperationException("Connection string 'BeanScene2Context' not found.")));
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<BeanScene2Context>();
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<BeanScene2Context>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+       .AddEntityFrameworkStores<BeanScene2Context>()
+       .AddDefaultTokenProviders();
 
 //Services configuration
 builder.Services.AddScoped<IAreasService, AreasService>();
-
+builder.Services.AddScoped<IUserService, UserService>();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddScoped<IEmailService, EmailService>();
+//builder.Services.AddScoped<IEmailService, EmailService>();
 
 //builder.Services.AddDbContext<BeanScene2DbContext>(options => options.UseSqlServer(
 //    builder.Configuration.GetConnectionString("DefaultConnection"))
@@ -42,7 +46,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
-app.MapRazorPages();
+//app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",

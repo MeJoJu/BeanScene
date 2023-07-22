@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace BeanScene2.Data
 {
-    public class BeanScene2Context : IdentityDbContext
+    public class BeanScene2Context : IdentityDbContext<ApplicationUser>
     {
         public BeanScene2Context (DbContextOptions<BeanScene2Context> options)
             : base(options)
