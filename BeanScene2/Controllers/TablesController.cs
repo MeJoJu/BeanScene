@@ -11,7 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BeanScene2.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
+
     public class TablesController : Controller
     {
         private readonly BeanScene2Context _context;
@@ -51,6 +52,7 @@ namespace BeanScene2.Controllers
         public IActionResult Create()
         {
             ViewData["AreaId"] = new SelectList(_context.Area, "AreaId", "AreaName");
+            
             return View();
         }
 

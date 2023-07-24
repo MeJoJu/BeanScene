@@ -12,22 +12,21 @@ using Microsoft.AspNetCore.Authorization;
 namespace BeanScene2.Controllers
 {
     [Authorize(Roles = "admin")]
+
     public class UsersController : Controller
     {
         private readonly BeanScene2Context _context;
-
         public UsersController(BeanScene2Context context)
         {
             _context = context;
         }
-
         // GET: Users
         public async Task<IActionResult> Index()
         {
             var beanScene2Context = _context.User.Include(u => u.Permission);
             return View(await beanScene2Context.ToListAsync());
         }
-
+        
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -59,7 +58,7 @@ namespace BeanScene2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,UserName,Password,Role,PermissionId")] User user)
+        public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,UserName,Password,Role,PermissionId,ProfilePicture")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +92,7 @@ namespace BeanScene2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UserId,FirstName,LastName,UserName,Password,Role,PermissionId")] User user)
+        public async Task<IActionResult> Edit(int id, [Bind("UserId,FirstName,LastName,UserName,Password,Role,PermissionId,ProfilePicture")] User user)
         {
             if (id != user.UserId)
             {

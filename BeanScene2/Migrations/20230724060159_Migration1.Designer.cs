@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BeanScene2.Migrations
 {
     [DbContext(typeof(BeanScene2Context))]
-    [Migration("20230721054822_2ndCreation")]
-    partial class _2ndCreation
+    [Migration("20230724060159_Migration1")]
+    partial class Migration1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -282,6 +282,10 @@ namespace BeanScene2.Migrations
 
                     b.Property<int>("PermissionId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ProfilePicture")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Role")
                         .IsRequired()
