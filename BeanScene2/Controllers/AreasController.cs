@@ -12,7 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BeanScene2.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
+    [Authorize]
     public class AreasController : Controller
     {
         private readonly BeanScene2Context _context;
@@ -29,8 +30,11 @@ namespace BeanScene2.Controllers
         // GET: Areas
         public async Task<IActionResult> Index()
         {
+            var data = await _service.GetAllAsync();
+            return View(data);
+
             //return View(await _context.Area.ToListAsync());
-            return View(await _service.GetAllAsync());
+            //return View(await _service.GetAllAsync());
 
             //following error is the way we using async and await. so use above way.
               //return _context.Area.ToListAsync() != null ? 
@@ -39,21 +43,25 @@ namespace BeanScene2.Controllers
         }
 
         // GET: Areas/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Area == null)
-            {
-                return NotFound();
-            }
+            var areaDetails = await _service.GetByIdAsync(id);
+            if(areaDetails == null) return View("NotFound");
+            return View(areaDetails);
 
-            var area = await _context.Area
-                .FirstOrDefaultAsync(m => m.AreaId == id);
-            if (area == null)
-            {
-                return NotFound();
-            }
+            //if (id == null || _context.Area == null)
+            //{
+            //    return NotFound();
+            //}
 
-            return View(area);
+            //var area = await _context.Area
+            //    .FirstOrDefaultAsync(m => m.AreaId == id);
+            //if (area == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return View(area);
         }
 
         // GET: Areas/Create
@@ -80,21 +88,24 @@ namespace BeanScene2.Controllers
             return View(area);
         }
 
-        // GET: Areas/Edit/5
+        // GET: Areas/Edit/id
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Area == null)
-            {
-                return NotFound();
-            }
+            var areaDetails = await _service.GetByIdAsync(id);
+            if (areaDetails == null) return View("NotFound");
+            return View(areaDetails);
+            //if (id == null || _context.Area == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var area = await _context.Area.FindAsync(id);
-            if (area == null)
-            {
-                return NotFound();
-            }
-            return View(area);
+            //var area = await _context.Area.FindAsync(id);
+            //if (area == null)
+            //{
+            //    return NotFound();
+            //}
+            //return View(area);
         }
 
         // POST: Areas/Edit/5
@@ -114,7 +125,7 @@ namespace BeanScene2.Controllers
             {
                 try
                 {
-                    _context.Update(area);
+                    await _service.UpdateAsync(id,area);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -133,7 +144,7 @@ namespace BeanScene2.Controllers
             return View(area);
         }
 
-        // GET: Areas/Delete/5
+        // GET: Areas/Delete/id
         [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -158,23 +169,29 @@ namespace BeanScene2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Area == null)
-            {
-                return Problem("Entity set 'BeanScene2Context.Area'  is null.");
-            }
-            var area = await _context.Area.FindAsync(id);
-            if (area != null)
-            {
-                _context.Area.Remove(area);
-            }
-            
-            await _context.SaveChangesAsync();
+            var areaDetails = await _service.GetByIdAsync(id);
+            if (areaDetails == null) return View("NotFound");
+
+            await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
+
+            //if (_context.Area == null)
+            //{
+            //    return Problem("Entity set 'BeanScene2Context.Area'  is null.");
+            //}
+            //var area = await _context.Area.FindAsync(id);
+            //if (area != null)
+            //{
+            //    _context.Area.Remove(area);
+            //}
+
+            //await _context.SaveChangesAsync();
+            //return RedirectToAction(nameof(Index));
         }
 
         private bool AreaExists(int id)
         {
-          return (_context.Area?.Any(e => e.AreaId == id)).GetValueOrDefault();
+            return (_context.Area?.Any(e => e.AreaId == id)).GetValueOrDefault();
         }
     }
 }

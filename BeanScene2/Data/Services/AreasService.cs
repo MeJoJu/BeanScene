@@ -12,14 +12,17 @@ namespace BeanScene2.Data.Services
             _context = context;
         }
 
-        public Task AddAsync(Area NewArea)
+        public async Task AddAsync(Area NewArea)
         {
-            throw new NotImplementedException();
+            await _context.Area.AddAsync(NewArea);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+           var result = await _context.Area.FirstOrDefaultAsync(n=>n.AreaId == id);
+            _context.Area.Remove(result);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<Area>> GetAllAsync()
@@ -28,14 +31,17 @@ namespace BeanScene2.Data.Services
             return result;
         }
 
-        public Task<Area> GetByIdAsync(int id)
+        public async Task<Area> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = _context.Area.FirstOrDefault(n => n.AreaId == id);
+            return result;
         }
 
-        public Task<Area> UpdateAsync(int id, Area NewArea)
+        public async Task<Area> UpdateAsync(int id, Area NewArea)
         {
-            throw new NotImplementedException();
+            _context.Update(NewArea);
+            await _context.SaveChangesAsync();
+            return NewArea;
         }
     }
 }

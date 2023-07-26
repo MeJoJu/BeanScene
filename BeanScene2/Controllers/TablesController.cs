@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BeanScene2.Controllers
 {
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin")]
 
     public class TablesController : Controller
     {

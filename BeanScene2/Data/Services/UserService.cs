@@ -12,14 +12,16 @@ namespace BeanScene2.Services
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly SignInManager<ApplicationUser> signInManager;
-       
+        private readonly IFileService _IFService;
+
+
         public UserService(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager)
+            SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IFileService iFService)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
             this.signInManager = signInManager;
-
+            _IFService = iFService;
         }
 
         // Register to the system

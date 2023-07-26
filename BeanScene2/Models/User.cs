@@ -19,7 +19,7 @@ namespace BeanScene2.Models
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }
-        public string ProfilePicture { get; set; }
+        public string? ProfilePicture { get; set; }
 
 
         //Relationship
@@ -27,5 +27,8 @@ namespace BeanScene2.Models
         public int PermissionId { get; set; }
         [ForeignKey("PermissionId")]
         public Permission? Permission { get; set; }
+
+
+        
     }
 }

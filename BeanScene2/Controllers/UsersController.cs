@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BeanScene2.Data;
 using BeanScene2.Models;
 using Microsoft.AspNetCore.Authorization;
+using BeanScene2.Services;
 
 namespace BeanScene2.Controllers
 {
@@ -16,9 +17,12 @@ namespace BeanScene2.Controllers
     public class UsersController : Controller
     {
         private readonly BeanScene2Context _context;
-        public UsersController(BeanScene2Context context)
+        //private readonly IFileService _iFService;
+
+        public UsersController(BeanScene2Context context/*, IFileService iFService*/)
         {
             _context = context;
+            //_iFService = iFService;
         }
         // GET: Users
         public async Task<IActionResult> Index()
@@ -60,6 +64,19 @@ namespace BeanScene2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("UserId,FirstName,LastName,UserName,Password,Role,PermissionId,ProfilePicture")] User user)
         {
+            //if (user.ProfilePicture != null)
+            //{
+            //    //var fileReult = _iFService.SaveImage(user.ProfilePicture);
+            //    //if (fileReult.Item1 == 0)
+            //    //{
+            //    //    return "File could not saved";
+
+            //    //}
+                
+            //    //var imageName = fileReult.Item2;
+            //    //user.imageName = imageName;
+            //}
+
             if (ModelState.IsValid)
             {
                 _context.Add(user);

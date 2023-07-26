@@ -11,8 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BeanScene2.Controllers
 {
-    [Authorize(Roles = "admin")]
-
+    //[Authorize(Roles = "admin")]
+    [Authorize]
     public class SittingsController : Controller
     {
         private readonly BeanScene2Context _context;
@@ -47,7 +47,7 @@ namespace BeanScene2.Controllers
 
             return View(sitting);
         }
-
+        [Authorize(Roles = "admin")]
         // GET: Sittings/Create
         public IActionResult Create()
         {
@@ -57,6 +57,7 @@ namespace BeanScene2.Controllers
         // POST: Sittings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("SittingId,SittingType")] Sitting sitting)
@@ -69,7 +70,7 @@ namespace BeanScene2.Controllers
             }
             return View(sitting);
         }
-
+        [Authorize(Roles = "admin")]
         // GET: Sittings/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -89,6 +90,7 @@ namespace BeanScene2.Controllers
         // POST: Sittings/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("SittingId,SittingType")] Sitting sitting)
@@ -120,8 +122,9 @@ namespace BeanScene2.Controllers
             }
             return View(sitting);
         }
-
+        [Authorize(Roles = "admin")]
         // GET: Sittings/Delete/5
+
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Sitting == null)
@@ -138,7 +141,7 @@ namespace BeanScene2.Controllers
 
             return View(sitting);
         }
-
+        [Authorize(Roles = "admin")]
         // POST: Sittings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
